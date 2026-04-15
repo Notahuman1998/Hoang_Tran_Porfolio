@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elian Vance | Electrical Engineer</title>
+    
+    <!-- Fonts: Cabinet Grotesk (Display) & Satoshi (Body) -->
+    <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,900&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f0f0f',
+                        light: '#f5f5f5',
+                        muted: '#888888',
+                        accent: '#facc15', // Electric Yellow
+                        surface: '#1a1a1a'
+                    },
+                    fontFamily: {
+                        sans: ['Satoshi', 'sans-serif'],
+                        display: ['Cabinet Grotesk', 'sans-serif']
+                    },
+                    fontSize: {
+                        'hero': 'clamp(4rem, 12vw, 12rem)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Three.js & GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background-color: #0f0f0f;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+        
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #facc15; 
+        }
+
+        /* 3D Canvas Background */
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.6;
+        }
+
+        .project-card {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .text-outline {
+            -webkit-text-stroke: 1px #888888;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-accent selection:text-dark">
+
+    <!-- 3D Background Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Sticky Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 mix-blend-difference py-6 px-6 md:px-12 flex justify-between items-center transition-all duration-300">
+        <a href="#" class="font-display font-bold text-2xl tracking-tighter uppercase text-light hover:text-accent transition-colors">
+            Elian.EE
+        </a>
+        <div class="hidden md:flex gap-8 items-center">
+            <a href="#about" class="font-medium text-sm uppercase tracking-widest hover:text-accent transition-colors">About</a>
+            <a href="#work" class="font-medium text-sm uppercase tracking-widest hover:text-accent transition-colors">Work</a>
+            <a href="#contact" class="font-medium text-sm uppercase tracking-widest hover:text-accent transition-colors">Contact</a>
+        </div>
+        <div class="flex gap-4 items-center">
+            <a href="#" class="hover:text-accent transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+            <a href="#" class="hover:text-accent transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+            <a href="#" class="hover:text-accent transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+        </div>
+    </nav>
+
+    <main class="px-6 md:px-12 max-w-screen-2xl mx-auto">
+        
+        <!-- Hero Section -->
+        <section class="min-h-screen flex flex-col justify-center relative pt-20">
+            <p class="font-medium text-muted uppercase tracking-[0.2em] mb-4 ml-1 reveal-hero">Hello! I'm</p>
+            <h1 class="font-display font-black text-hero leading-[0.85] tracking-tighter uppercase reveal-hero relative z-10">
+                Elian<br>Vance.
+            </h1>
+            <div class="mt-8 md:mt-12 overflow-hidden h-12 md:h-16 flex items-center reveal-hero">
+                <p class="font-display font-bold text-3xl md:text-5xl uppercase tracking-tight text-accent flex items-center gap-4">
+                    <i data-lucide="zap" class="w-8 h-8 md:w-10 md:h-10"></i>
+                    <span id="cycling-text">Electrical Engineer</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- About / What I Do -->
+        <section id="about" class="py-24 md:py-40 border-t border-surface reveal">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+                <div class="lg:col-span-4">
+                    <h2 class="font-display font-bold text-4xl md:text-6xl uppercase tracking-tight mb-6">What<br>I Do</h2>
+                    <p class="text-muted text-lg leading-relaxed max-w-sm">
+                        Bridging the gap between conceptual physics and tangible hardware. I design robust electrical systems, custom PCBs, and industrial automation solutions.
+                    </p>
+                </div>
+                <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+                    <div>
+                        <h3 class="font-display font-bold text-2xl uppercase tracking-tight mb-6 border-b border-surface pb-4 text-accent">Develop (Hardware)</h3>
+                        <ul class="space-y-4 text-lg text-light">
+                            <li class="flex items-center gap-3"><i data-lucide="cpu" class="w-5 h-5 text-muted"></i> Custom PCB Layout & Design</li>
+                            <li class="flex items-center gap-3"><i data-lucide="battery-charging" class="w-5 h-5 text-muted"></i> Power Electronics & Inverters</li>
+                            <li class="flex items-center gap-3"><i data-lucide="activity" class="w-5 h-5 text-muted"></i> Signal Integrity Analysis</li>
+                            <li class="flex items-center gap-3"><i data-lucide="microscope" class="w-5 h-5 text-muted"></i> Prototyping & Testing</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-2xl uppercase tracking-tight mb-6 border-b border-surface pb-4 text-accent">Design (Systems)</h3>
+                        <ul class="space-y-4 text-lg text-light">
+                            <li class="flex items-center gap-3"><i data-lucide="server" class="w-5 h-5 text-muted"></i> PLC & SCADA Programming</li>
+                            <li class="flex items-center gap-3"><i data-lucide="git-merge" class="w-5 h-5 text-muted"></i> Industrial Control Systems</li>
+                            <li class="flex items-center gap-3"><i data-lucide="cable" class="w-5 h-5 text-muted"></i> Power Distribution Modeling</li>
+                            <li class="flex items-center gap-3"><i data-lucide="terminal-square" class="w-5 h-5 text-muted"></i> Embedded C/C++ Firmware</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Timeline -->
+        <section class="py-24 md:py-40 border-t border-surface reveal">
+            <h2 class="font-display font-bold text-4xl md:text-6xl uppercase tracking-tight mb-16">Experience</h2>
+            <div class="max-w-4xl relative border-l border-surface ml-4 md:ml-6 space-y-16">
+                
+                <!-- Entry 1 -->
+                <div class="relative pl-10 md:pl-16 group">
+                    <div class="absolute w-4 h-4 bg-dark border-2 border-accent rounded-full -left-[9px] top-2 transition-transform duration-300 group-hover:scale-150 group-hover:bg-accent"></div>
+                    <p class="text-sm font-bold tracking-widest text-accent uppercase mb-2">2024 — Present</p>
+                    <h3 class="font-display font-bold text-3xl uppercase mb-1">Senior Hardware Engineer</h3>
+                    <p class="text-lg text-light mb-4">VoltCore Technologies</p>
+                    <p class="text-muted leading-relaxed">
+                        Leading the hardware architecture for next-generation DC fast-charging stations for EVs. Overseeing thermal management, power conversion logic, and compliance with high-voltage safety standards (UL/IEC).
+                    </p>
+                </div>
+
+                <!-- Entry 2 -->
+                <div class="relative pl-10 md:pl-16 group">
+                    <div class="absolute w-4 h-4 bg-dark border-2 border-surface rounded-full -left-[9px] top-2 transition-all duration-300 group-hover:border-accent group-hover:scale-150"></div>
+                    <p class="text-sm font-bold tracking-widest text-muted uppercase mb-2">2021 — 2024</p>
+                    <h3 class="font-display font-bold text-3xl uppercase mb-1">Electrical Engineer</h3>
+                    <p class="text-lg text-light mb-4">Ampere Industrial Systems</p>
+                    <p class="text-muted leading-relaxed">
+                        Designed multi-layer mixed-signal PCBs for industrial robotics. Programmed Allen-Bradley PLCs and integrated sensor arrays over CAN bus and EtherCAT networks.
+                    </p>
+                </div>
+
+                <!-- Entry 3 -->
+                <div class="relative pl-10 md:pl-16 group">
+                    <div class="absolute w-4 h-4 bg-dark border-2 border-surface rounded-full -left-[9px] top-2 transition-all duration-300 group-hover:border-accent group-hover:scale-150"></div>
+                    <p class="text-sm font-bold tracking-widest text-muted uppercase mb-2">2019 — 2021</p>
+                    <h3 class="font-display font-bold text-3xl uppercase mb-1">Hardware Intern</h3>
+                    <p class="text-lg text-light mb-4">GridDynamics R&D</p>
+                    <p class="text-muted leading-relaxed">
+                        Assisted in simulation and modeling of smart grid distribution networks using MATLAB/Simulink. Conducted lab testing and failure analysis on prototype smart meters.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Work / Projects -->
+        <section id="work" class="py-24 md:py-40 border-t border-surface reveal">
+            <h2 class="font-display font-bold text-4xl md:text-6xl uppercase tracking-tight mb-16">Selected Works</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-24">
+                
+                <!-- Project 01 -->
+                <div class="group cursor-pointer project-card block relative">
+                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">01</div>
+                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop" alt="High-Efficiency Inverter" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
+                    </div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-display font-bold text-3xl uppercase mb-2">High-Efficiency Inverter</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Power Electronics</span>
+                            </div>
+                            <p class="text-muted text-sm">Altium Designer • SPICE • Thermal Analysis</p>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
+                    </div>
+                </div>
+
+                <!-- Project 02 -->
+                <div class="group cursor-pointer project-card block relative md:mt-32">
+                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">02</div>
+                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
+                        <img src="https://images.unsplash.com/photo-1565019052959-71c1b3f9bb46?q=80&w=1000&auto=format&fit=crop" alt="Automated Sorting System" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
+                    </div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-display font-bold text-3xl uppercase mb-2">Auto-Sort Logic Sys</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Industrial Control</span>
+                            </div>
+                            <p class="text-muted text-sm">Allen-Bradley PLC • SCADA • EtherCAT</p>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
+                    </div>
+                </div>
+
+                <!-- Project 03 -->
+                <div class="group cursor-pointer project-card block relative">
+                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">03</div>
+                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
+                        <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?q=80&w=1000&auto=format&fit=crop" alt="IoT Energy Monitor" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
+                    </div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-display font-bold text-3xl uppercase mb-2">IoT Energy Monitor</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Embedded Systems</span>
+                            </div>
+                            <p class="text-muted text-sm">ESP32 • C++ • KiCad • MQTT</p>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
+                    </div>
+                </div>
+
+                <!-- Project 04 -->
+                <div class="group cursor-pointer project-card block relative md:mt-32">
+                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">04</div>
+                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
+                        <img src="https://images.unsplash.com/photo-1555664424-778a1e5e1b48?q=80&w=1000&auto=format&fit=crop" alt="Smart Grid Simulator" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
+                    </div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-display font-bold text-3xl uppercase mb-2">Smart Grid Simulator</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Simulation</span>
+                            </div>
+                            <p class="text-muted text-sm">MATLAB • Simulink • Python Scripting</p>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
+                    </div>
+                </div>
+
+                <!-- Project 05 -->
+                <div class="group cursor-pointer project-card block relative">
+                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">05</div>
+                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
+                        <img src="https://images.unsplash.com/photo-1508873535684-277a3cb8c90a?q=80&w=1000&auto=format&fit=crop" alt="Wearable ECG" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
+                    </div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-display font-bold text-3xl uppercase mb-2">Wearable ECG Patch</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Biomedical / Analog</span>
+                            </div>
+                            <p class="text-muted text-sm">Low-Noise Analog • Rigid-Flex PCB</p>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
+                    </div>
+                </div>
+
+                <!-- Project 06 -->
+                <div class="group cursor-pointer project-card block relative md:mt-32">
+                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">06</div>
+                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
+                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1000&auto=format&fit=crop" alt="BLDC Motor Controller" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
+                    </div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <div>
+                            <h3 class="font-display font-bold text-3xl uppercase mb-2">BLDC Motor Control</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Motor Control</span>
+                            </div>
+                            <p class="text-muted text-sm">STM32 • FOC Algorithm • High Current Routing</p>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Tech Stack Grid -->
+        <section class="py-24 md:py-40 border-t border-surface reveal">
+            <h2 class="font-display font-bold text-4xl md:text-6xl uppercase tracking-tight mb-12">Tech Stack</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+                <!-- Stack Items (Using text since specific EE icons aren't standard in basic icon packs, styling them as badges/blocks) -->
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">Altium</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">KiCad</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">MATLAB</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">AutoCAD</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">C / C++</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">Python</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">SPICE</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">PLC</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">SCADA</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">STM32</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">Soldering</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
+                    <span class="font-display font-bold text-xl uppercase tracking-wider">Oscilloscope</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 md:py-40 border-t border-surface reveal">
+            <h2 class="font-display font-bold text-[clamp(3rem,8vw,8rem)] leading-none uppercase tracking-tighter mb-12 hover:text-accent transition-colors w-fit">
+                <a href="mailto:hello@elianvance.com">Let's Connect <i data-lucide="arrow-right" class="inline w-12 h-12 md:w-24 md:h-24"></i></a>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-surface pt-12">
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-muted text-sm mb-4">Contact Info</h4>
+                    <p class="text-lg mb-1"><a href="mailto:hello@elianvance.com" class="hover:text-accent transition-colors">hello@elianvance.com</a></p>
+                    <p class="text-lg">+1 (555) 019-2834</p>
+                </div>
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-muted text-sm mb-4">Location</h4>
+                    <p class="text-lg mb-1">San Francisco, CA</p>
+                    <p class="text-lg text-muted">Available for relocation</p>
+                </div>
+                <div>
+                    <h4 class="font-bold uppercase tracking-widest text-muted text-sm mb-4">Socials</h4>
+                    <div class="flex flex-col gap-2">
+                        <a href="#" class="text-lg hover:text-accent transition-colors w-fit flex items-center gap-2"><i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn</a>
+                        <a href="#" class="text-lg hover:text-accent transition-colors w-fit flex items-center gap-2"><i data-lucide="github" class="w-4 h-4"></i> GitHub</a>
+                        <a href="#" class="text-lg hover:text-accent transition-colors w-fit flex items-center gap-2"><i data-lucide="twitter" class="w-4 h-4"></i> Twitter</a>
+                        <a href="#" class="text-lg hover:text-accent transition-colors w-fit flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-surface py-8 text-center px-6">
+        <p class="text-muted text-sm uppercase tracking-widest">
+            &copy; <span id="year"></span> Elian Vance. Designed & Developed with Precision.
+        </p>
+    </footer>
+
+    <!-- Initialization Scripts -->
+    <script>
+        // Set Current Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Register GSAP Plugins
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Init Animations
+        gsap.from(".reveal-hero", {
+            y: 50,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: "power3.out",
+            delay: 0.2
+        });
+
+        // Scroll Reveal Animations for Sections
+        const revealElements = document.querySelectorAll('.reveal');
+        revealElements.forEach((el) => {
+            gsap.fromTo(el,
+                { opacity: 0, y: 80 },
+                {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    ease: "power2.out"
+                }
+            );
+        });
+
+        // Cycling Text Logic
+        const words = ["Electrical Engineer", "Hardware Designer", "Systems Integrator", "PCB Architect"];
+        let wordIndex = 0;
+        const textTarget = document.getElementById("cycling-text");
+        
+        setInterval(() => {
+            gsap.to(textTarget, {
+                y: -20, opacity: 0, duration: 0.4, ease: "power2.in", onComplete: () => {
+                    wordIndex = (wordIndex + 1) % words.length;
+                    textTarget.innerText = words[wordIndex];
+                    gsap.fromTo(textTarget, 
+                        { y: 20, opacity: 0 }, 
+                        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+                    );
+                }
+            });
+        }, 3000);
+
+        // Three.js 3D Background Element setup
+        const initThreeJS = () => {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            
+            // Camera setup
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+            camera.position.x = 10; // Shifted slightly right
+
+            // Renderer setup
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Performance optimization
+            container.appendChild(renderer.domElement);
+
+            // Create geometry representing electrical coil/magnetic field
+            // TorusKnot provides a complex, continuous looping path
+            const geometry = new THREE.TorusKnotGeometry(12, 1.5, 120, 16);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0xfacc15, // Accent Color
+                wireframe: true, 
+                transparent: true,
+                opacity: 0.15 
+            });
+            const torusKnot = new THREE.Mesh(geometry, material);
+            scene.add(torusKnot);
+
+            // Mouse interaction logic
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - windowHalfX);
+                mouseY = (event.clientY - windowHalfY);
+            });
+
+            // Animation Loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                targetX = mouseX * 0.001;
+                targetY = mouseY * 0.001;
+
+                // Base slow rotation
+                torusKnot.rotation.y += 0.002;
+                torusKnot.rotation.z += 0.001;
+
+                // Mouse follow parallax effect with easing
+                torusKnot.rotation.x += 0.05 * (targetY - torusKnot.rotation.x);
+                torusKnot.rotation.y += 0.05 * (targetX - torusKnot.rotation.y);
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            // Handle Window Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+
+        // Initialize ThreeJS when window loads
+        window.onload = initThreeJS;
+
+    </script>
+</body>
+</html>
