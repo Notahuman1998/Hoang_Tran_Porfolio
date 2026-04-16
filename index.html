@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoang Tran | Electrical Engineer</title>
+    <title>Elian Vance | Electrical Engineer</title>
     
     <!-- Fonts: Cabinet Grotesk (Display) & Satoshi (Body) -->
     <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,900&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
@@ -36,8 +36,9 @@
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Three.js & GSAP -->
+    <!-- Three.js, GLTFLoader & GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
@@ -62,9 +63,9 @@
             background: #facc15; 
         }
 
-        /* 3D Canvas Background */
+        /* 3D Canvas Background - Changed to FIXED so it follows the user down the page */
         #canvas-container {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -72,7 +73,7 @@
             z-index: -1;
             pointer-events: none;
             overflow: hidden;
-            opacity: 0.6;
+            opacity: 0.85; /* Slightly increased opacity for character visibility */
         }
 
         .project-card {
@@ -93,7 +94,7 @@
     <!-- Sticky Navigation -->
     <nav class="fixed top-0 left-0 w-full z-50 mix-blend-difference py-6 px-6 md:px-12 flex justify-between items-center transition-all duration-300">
         <a href="#" class="font-display font-bold text-2xl tracking-tighter uppercase text-light hover:text-accent transition-colors">
-            Hoang.EE
+            Elian.EE
         </a>
         <div class="hidden md:flex gap-8 items-center">
             <a href="#about" class="font-medium text-sm uppercase tracking-widest hover:text-accent transition-colors">About</a>
@@ -107,24 +108,33 @@
         </div>
     </nav>
 
-    <main class="px-6 md:px-12 max-w-screen-2xl mx-auto">
+    <main class="max-w-screen-2xl mx-auto">
         
-        <!-- Hero Section -->
-        <section class="min-h-screen flex flex-col justify-center relative pt-20">
-            <p class="font-medium text-muted uppercase tracking-[0.2em] mb-4 ml-1 reveal-hero">Hello! I'm</p>
-            <h1 class="font-display font-black text-hero leading-[0.85] tracking-tighter uppercase reveal-hero relative z-10">
-                Hoang<br>Tran.
-            </h1>
-            <div class="mt-8 md:mt-12 overflow-hidden h-12 md:h-16 flex items-center reveal-hero">
-                <p class="font-display font-bold text-3xl md:text-5xl uppercase tracking-tight text-accent flex items-center gap-4">
-                    <i data-lucide="zap" class="w-8 h-8 md:w-10 md:h-10"></i>
-                    <span id="cycling-text">Electrical Engineer</span>
-                </p>
+        <!-- Hero Section (Now structured to be pinned by GSAP) -->
+        <section id="hero" class="min-h-screen w-full flex flex-col justify-center relative px-6 md:px-12">
+            <!-- Wrapper to fade text out during 3D scroll sequence -->
+            <div class="hero-content relative z-10 w-full">
+                <p class="font-medium text-muted uppercase tracking-[0.2em] mb-4 ml-1 reveal-hero">Hello! I'm</p>
+                <h1 class="font-display font-black text-hero leading-[0.85] tracking-tighter uppercase reveal-hero">
+                    Elian<br>Vance.
+                </h1>
+                <div class="mt-8 md:mt-12 overflow-hidden h-12 md:h-16 flex items-center reveal-hero">
+                    <p class="font-display font-bold text-3xl md:text-5xl uppercase tracking-tight text-accent flex items-center gap-4">
+                        <i data-lucide="zap" class="w-8 h-8 md:w-10 md:h-10"></i>
+                        <span id="cycling-text">Electrical Engineer</span>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-6 md:left-12 flex items-center gap-3 animate-pulse">
+                <div class="w-px h-16 bg-gradient-to-b from-accent to-transparent"></div>
+                <span class="text-xs uppercase tracking-[0.3em] text-accent rotate-90 origin-left ml-2 whitespace-nowrap">Scroll</span>
             </div>
         </section>
 
         <!-- About / What I Do -->
-        <section id="about" class="py-24 md:py-40 border-t border-surface reveal">
+        <section id="about" class="py-24 md:py-40 border-t border-surface reveal px-6 md:px-12">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
                 <div class="lg:col-span-4">
                     <h2 class="font-display font-bold text-4xl md:text-6xl uppercase tracking-tight mb-6">What<br>I Do</h2>
@@ -156,7 +166,7 @@
         </section>
 
         <!-- Career Timeline -->
-        <section class="py-24 md:py-40 border-t border-surface reveal">
+        <section class="py-24 md:py-40 border-t border-surface reveal px-6 md:px-12">
             <h2 class="font-display font-bold text-4xl md:text-6xl uppercase tracking-tight mb-16">Experience</h2>
             <div class="max-w-4xl relative border-l border-surface ml-4 md:ml-6 space-y-16">
                 
@@ -197,7 +207,7 @@
         </section>
 
         <!-- Work / Projects -->
-        <section id="work" class="py-24 md:py-40 border-t border-surface reveal">
+        <section id="work" class="py-24 md:py-40 border-t border-surface reveal px-6 md:px-12">
             <h2 class="font-display font-bold text-4xl md:text-6xl uppercase tracking-tight mb-16">Selected Works</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-24">
@@ -238,139 +248,23 @@
                     </div>
                 </div>
 
-                <!-- Project 03 -->
-                <div class="group cursor-pointer project-card block relative">
-                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">03</div>
-                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
-                        <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?q=80&w=1000&auto=format&fit=crop" alt="IoT Energy Monitor" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
-                    </div>
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div>
-                            <h3 class="font-display font-bold text-3xl uppercase mb-2">IoT Energy Monitor</h3>
-                            <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Embedded Systems</span>
-                            </div>
-                            <p class="text-muted text-sm">ESP32 • C++ • KiCad • MQTT</p>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
-                    </div>
-                </div>
-
-                <!-- Project 04 -->
-                <div class="group cursor-pointer project-card block relative md:mt-32">
-                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">04</div>
-                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
-                        <img src="https://images.unsplash.com/photo-1555664424-778a1e5e1b48?q=80&w=1000&auto=format&fit=crop" alt="Smart Grid Simulator" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
-                    </div>
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div>
-                            <h3 class="font-display font-bold text-3xl uppercase mb-2">Smart Grid Simulator</h3>
-                            <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Simulation</span>
-                            </div>
-                            <p class="text-muted text-sm">MATLAB • Simulink • Python Scripting</p>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
-                    </div>
-                </div>
-
-                <!-- Project 05 -->
-                <div class="group cursor-pointer project-card block relative">
-                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">05</div>
-                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
-                        <img src="https://images.unsplash.com/photo-1508873535684-277a3cb8c90a?q=80&w=1000&auto=format&fit=crop" alt="Wearable ECG" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
-                    </div>
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div>
-                            <h3 class="font-display font-bold text-3xl uppercase mb-2">Wearable ECG Patch</h3>
-                            <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Biomedical / Analog</span>
-                            </div>
-                            <p class="text-muted text-sm">Low-Noise Analog • Rigid-Flex PCB</p>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
-                    </div>
-                </div>
-
-                <!-- Project 06 -->
-                <div class="group cursor-pointer project-card block relative md:mt-32">
-                    <div class="absolute -top-16 -left-4 font-display font-black text-9xl text-outline opacity-20 z-0 select-none transition-all duration-500 group-hover:opacity-50 group-hover:text-accent group-hover:-translate-y-4">06</div>
-                    <div class="relative z-10 w-full aspect-[4/3] overflow-hidden bg-surface mb-6">
-                        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1000&auto=format&fit=crop" alt="BLDC Motor Controller" class="w-full h-full object-cover grayscale opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100">
-                    </div>
-                    <div class="relative z-10 flex justify-between items-start">
-                        <div>
-                            <h3 class="font-display font-bold text-3xl uppercase mb-2">BLDC Motor Control</h3>
-                            <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="text-xs font-bold uppercase tracking-wider text-dark bg-accent px-2 py-1">Motor Control</span>
-                            </div>
-                            <p class="text-muted text-sm">STM32 • FOC Algorithm • High Current Routing</p>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="w-8 h-8 text-muted transition-colors duration-300 group-hover:text-accent"></i>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Tech Stack Grid -->
-        <section class="py-24 md:py-40 border-t border-surface reveal">
-            <h2 class="font-display font-bold text-4xl md:text-6xl uppercase tracking-tight mb-12">Tech Stack</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-                <!-- Stack Items (Using text since specific EE icons aren't standard in basic icon packs, styling them as badges/blocks) -->
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">Altium</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">KiCad</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">MATLAB</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">AutoCAD</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">C / C++</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">Python</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">SPICE</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">PLC</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">SCADA</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">STM32</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">Soldering</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-8 border border-surface hover:border-accent hover:text-accent transition-colors duration-300">
-                    <span class="font-display font-bold text-xl uppercase tracking-wider">Oscilloscope</span>
-                </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-24 md:py-40 border-t border-surface reveal">
+        <section id="contact" class="py-24 md:py-40 border-t border-surface reveal px-6 md:px-12">
             <h2 class="font-display font-bold text-[clamp(3rem,8vw,8rem)] leading-none uppercase tracking-tighter mb-12 hover:text-accent transition-colors w-fit">
-                <a href="mailto:huyhoang.finland@gmail.com">Let's Connect <i data-lucide="arrow-right" class="inline w-12 h-12 md:w-24 md:h-24"></i></a>
+                <a href="mailto:hello@elianvance.com">Let's Connect <i data-lucide="arrow-right" class="inline w-12 h-12 md:w-24 md:h-24"></i></a>
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-surface pt-12">
                 <div>
                     <h4 class="font-bold uppercase tracking-widest text-muted text-sm mb-4">Contact Info</h4>
-                    <p class="text-lg mb-1"><a href="mailto:huyhoang.finland@gmail.com" class="hover:text-accent transition-colors">huyhoang.finland@gmail.com</a></p>
+                    <p class="text-lg mb-1"><a href="mailto:hello@elianvance.com" class="hover:text-accent transition-colors">hello@elianvance.com</a></p>
                     <p class="text-lg">+1 (555) 019-2834</p>
                 </div>
                 <div>
                     <h4 class="font-bold uppercase tracking-widest text-muted text-sm mb-4">Location</h4>
-                    <p class="text-lg mb-1">Espoo, Finland</p>
+                    <p class="text-lg mb-1">San Francisco, CA</p>
                     <p class="text-lg text-muted">Available for relocation</p>
                 </div>
                 <div>
@@ -390,7 +284,7 @@
     <!-- Footer -->
     <footer class="border-t border-surface py-8 text-center px-6">
         <p class="text-muted text-sm uppercase tracking-widest">
-            &copy; <span id="year"></span> Hoang Tran. Designed & Developed with Precision.
+            &copy; <span id="year"></span> Elian Vance. Designed & Developed with Precision.
         </p>
     </footer>
 
@@ -405,7 +299,7 @@
         // Register GSAP Plugins
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Init Animations
+        // Intro Animations
         gsap.from(".reveal-hero", {
             y: 50,
             opacity: 0,
@@ -415,7 +309,7 @@
             delay: 0.2
         });
 
-        // Scroll Reveal Animations for Sections
+        // Scroll Reveal Animations for Sections below Hero
         const revealElements = document.querySelectorAll('.reveal');
         revealElements.forEach((el) => {
             gsap.fromTo(el,
@@ -452,62 +346,146 @@
             });
         }, 3000);
 
-        // Three.js 3D Background Element setup
+        // --- THREE.JS ADVANCED SETUP ---
         const initThreeJS = () => {
             const container = document.getElementById('canvas-container');
             const scene = new THREE.Scene();
             
             // Camera setup
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 30;
-            camera.position.x = 10; // Shifted slightly right
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(2, 2, 8); // Start position slightly offset
 
             // Renderer setup
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Performance optimization
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            // Create geometry representing electrical coil/magnetic field
-            // TorusKnot provides a complex, continuous looping path
-            const geometry = new THREE.TorusKnotGeometry(12, 1.5, 120, 16);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: 0xfacc15, // Accent Color
-                wireframe: true, 
-                transparent: true,
-                opacity: 0.15 
+            // Lighting (Crucial for 3D shapes)
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+            
+            const dirLight = new THREE.DirectionalLight(0xfacc15, 1);
+            dirLight.position.set(5, 10, 5);
+            scene.add(dirLight);
+
+            // --- 1. THE CHARACTER ---
+            const characterGroup = new THREE.Group();
+            
+            /* * HOW TO LOAD A CUSTOM .GLB CHARACTER INSTEAD OF GEOMETRY:
+             * * const loader = new THREE.GLTFLoader();
+             * loader.load('path/to/your/character.glb', (gltf) => {
+             * const model = gltf.scene;
+             * model.scale.set(1.5, 1.5, 1.5);
+             * characterGroup.add(model);
+             * });
+             * */
+
+            // Procedural Placeholder "Robot Engineer" Character
+            const matDark = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.8 });
+            const matYellow = new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.2, metalness: 0.8 });
+            
+            const headGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+            const head = new THREE.Mesh(headGeo, matYellow);
+            head.position.y = 3;
+            
+            const bodyGeo = new THREE.CylinderGeometry(0.8, 1, 2.5, 8);
+            const bodyMesh = new THREE.Mesh(bodyGeo, matDark);
+            bodyMesh.position.y = 1;
+
+            characterGroup.add(head);
+            characterGroup.add(bodyMesh);
+            characterGroup.position.set(3, -1, 0); // Start on the right side
+            scene.add(characterGroup);
+
+            // --- 2. THE DESK SCENE ---
+            const deskGroup = new THREE.Group();
+            
+            // Desk surface
+            const deskTopGeo = new THREE.BoxGeometry(5, 0.2, 2.5);
+            const deskTop = new THREE.Mesh(deskTopGeo, matDark);
+            
+            // Monitor Stand
+            const standGeo = new THREE.BoxGeometry(0.2, 1, 0.2);
+            const stand = new THREE.Mesh(standGeo, matDark);
+            stand.position.set(0, 0.6, -0.5);
+
+            // Monitor Screen
+            const screenGeo = new THREE.BoxGeometry(2.5, 1.5, 0.1);
+            const screen = new THREE.Mesh(screenGeo, matDark);
+            screen.position.set(0, 1.2, -0.4);
+
+            // Glowing Display
+            const displayGeo = new THREE.PlaneGeometry(2.3, 1.3);
+            const displayMat = new THREE.MeshBasicMaterial({ color: 0xfacc15, transparent: true, opacity: 0.7 });
+            const display = new THREE.Mesh(displayGeo, displayMat);
+            display.position.set(0, 1.2, -0.34);
+
+            deskGroup.add(deskTop);
+            deskGroup.add(stand);
+            deskGroup.add(screen);
+            deskGroup.add(display);
+            
+            // Position desk far to the back and right
+            deskGroup.position.set(12, -1, -8);
+            deskGroup.rotation.y = -Math.PI / 6;
+            scene.add(deskGroup);
+
+            // --- GSAP SCROLLTRIGGER 3D ANIMATION ---
+            
+            // This timeline "pins" the hero section, meaning the user scrolls 
+            // to progress the 3D timeline before the rest of the page moves.
+            const tl3D = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "top top",
+                    end: "+=2500", // Length of scroll to finish animation
+                    scrub: 1,      // Smooth scrubbing
+                    pin: true,     // Pin the hero section!
+                    anticipatePin: 1
+                }
             });
-            const torusKnot = new THREE.Mesh(geometry, material);
-            scene.add(torusKnot);
 
-            // Mouse interaction logic
-            let mouseX = 0;
-            let mouseY = 0;
-            let targetX = 0;
-            let targetY = 0;
+            // 1. Fade out the Hero HTML text quickly
+            tl3D.to(".hero-content", {
+                opacity: 0,
+                y: -100,
+                duration: 1
+            }, 0);
 
-            const windowHalfX = window.innerWidth / 2;
-            const windowHalfY = window.innerHeight / 2;
+            // 2. Move Character to the Left
+            tl3D.to(characterGroup.position, {
+                x: -6,
+                ease: "power1.inOut",
+                duration: 2.5
+            }, 0.2);
 
-            document.addEventListener('mousemove', (event) => {
-                mouseX = (event.clientX - windowHalfX);
-                mouseY = (event.clientY - windowHalfY);
-            });
+            // 3. Camera Transition to the Close-up Desk Scene
+            tl3D.to(camera.position, {
+                x: deskGroup.position.x - 1,
+                y: deskGroup.position.y + 2,
+                z: deskGroup.position.z + 4,
+                ease: "power2.inOut",
+                duration: 3
+            }, 1.5); // Start zooming halfway through character move
 
-            // Animation Loop
+            // Rotate camera to look perfectly at the monitor
+            tl3D.to(camera.rotation, {
+                y: -Math.PI / 6,
+                x: -0.1,
+                ease: "power2.inOut",
+                duration: 3
+            }, 1.5);
+
+            // Animation Loop (Continuous subtle movement)
             const animate = () => {
                 requestAnimationFrame(animate);
 
-                targetX = mouseX * 0.001;
-                targetY = mouseY * 0.001;
-
-                // Base slow rotation
-                torusKnot.rotation.y += 0.002;
-                torusKnot.rotation.z += 0.001;
-
-                // Mouse follow parallax effect with easing
-                torusKnot.rotation.x += 0.05 * (targetY - torusKnot.rotation.x);
-                torusKnot.rotation.y += 0.05 * (targetX - torusKnot.rotation.y);
+                // Subtle hovering for character
+                characterGroup.position.y = -1 + Math.sin(Date.now() * 0.002) * 0.1;
+                
+                // Subtle rotation for head
+                head.rotation.y = Math.sin(Date.now() * 0.001) * 0.2;
 
                 renderer.render(scene, camera);
             };
